@@ -1,4 +1,5 @@
 #include <Support/PhysicalHost.h>
+#include <Support/GpuFrame.h>
 #include <Support/TestScene.h>
 
 #include <Helix/Engine/Rendering/RenderSettings.h>
@@ -417,4 +418,35 @@ HX_TEST(Physical, BindlessAndBoundTexturesDrawTheSameImage)
         s.Destroy();
     });
     std::printf("    %u devices with bindless textures\n", ran);
+}
+
+HX_TEST(Physical, GpuBudgetAt1080p)
+{
+    // The test scene at 1920 x 1080 with TAA: the GPU time of its frames and their passes on every device; with
+    // HELIX_GPU_BUDGET=1 (the hardware run of the exit check) a frame takes at most 16.6 ms (60 fps).
+    HX_REQUIRE(StartScripts());
+    bool checked = engine::testing::GpuBudgetChecked();
+    u32 ran = 0;
+    ForEachDevice([&](rhi::Device& device, StringView label) {
+        if (!PipelineDevice(device) || !device.Caps().gpuTimers)
+            return;
+        ran++;
+        ShaderFolder shaders;
+        TestTarget target(device, 1920, 1080);
+        SceneObjects s;
+        BuildPhysicalScene(s);
+        GetPhysicalAdditionalCameraData(s.camera)->SetAntialiasing(AntialiasingMode::TemporalAntialiasing);
+        auto draw = [] {
+            UpdateWorldMatrices();
+            Graphics::RenderFrame();
+        };
+        // The first frames make the shaders' variants and the pools.
+        engine::testing::TimeGpuFrames(device, 4, draw);
+        engine::testing::GpuFrameTimes times = engine::testing::TimeGpuFrames(device, 16, draw);
+        HX_REQUIRE(!times.frames.Empty());
+        engine::testing::PrintGpuFrames(label, times);
+        HX_CHECK(!checked || times.Median() <= 16.6);
+        s.Destroy();
+    });
+    std::printf("    %u devices with GPU timers%s\n", ran, checked ? ", budget checked" : "");
 }

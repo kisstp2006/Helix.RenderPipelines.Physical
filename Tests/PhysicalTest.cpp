@@ -261,6 +261,7 @@ HX_TEST(Physical, WhiteFurnace)
         HX_REQUIRE(out->GetData(results.Data(), u32(results.Size() * 16), 0));
         ran++;
         u32 i = 0;
+        f32 fromExpected = 0, fromTables = 0;
         for (const FurnaceSurface& f : surfaces)
             for (f32 mu : views)
             {
@@ -271,12 +272,17 @@ HX_TEST(Physical, WhiteFurnace)
                 {
                     f32 want = f.expected > 0 ? f.expected : (&table.x)[c];
                     ok = ok && std::fabs((&integral.x)[c] - want) <= f.tolerance && std::fabs((&table.x)[c] - (&integral.x)[c]) <= f.tolerance;
+                    if (f.expected > 0)
+                        fromExpected = Max(fromExpected, std::fabs((&integral.x)[c] - f.expected));
+                    fromTables = Max(fromTables, std::fabs((&table.x)[c] - (&integral.x)[c]));
                 }
                 if (!ok)
                     std::printf("    %.*s %s at %.2f: integral %.4f %.4f %.4f, tables %.4f %.4f %.4f\n", int(label.Size()), label.Data(), f.name, mu, integral.x, integral.y,
                                 integral.z, table.x, table.y, table.z);
                 HX_CHECK(ok);
             }
+        std::printf("    %.*s: %u cases, the white surfaces' energy off by at most %.4f, the tables off by at most %.4f\n", int(label.Size()), label.Data(),
+                    u32(cases.Size()), fromExpected, fromTables);
         GraphicsBuffer::Release(in);
         GraphicsBuffer::Release(out);
         cs->ClearVariants();

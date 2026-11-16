@@ -52,7 +52,7 @@ and logs why.
 | `Source/Helix.RenderPipelines.Physical.Runtime/` | The C# side: the generated bindings and the C# written over them |
 | `Shaders/` | The C# shaders and their library (`Shaders/Library/`): OpenPBR Lite, Unlit, the light clustering and exposure kernels, the sky, TAA and the final pass |
 | `Tools/EnergyTables/` | The tool that writes the energy tables |
-| `Tests/` | Tests in both languages run in the engine by a C++ test program on every device the pipeline supports (each D3D11 adapter, the newest OpenGL) and one it refuses (OpenGL 3.3): white furnace tests of the BSDF on the GPU, the energy tables against the tool, physical units against analytic values, the automatic exposure, the clusters, TAA, bindless against bound textures, golden images in `Tests/Golden/`; `Tests/Api/Helix.RenderPipelines.Physical.csv` is the inventory of the public C# surface |
+| `Tests/` | Tests in both languages run in the engine by a C++ test program on every device the pipeline supports (each D3D11 adapter, the newest OpenGL) and one it refuses (OpenGL 3.3): white furnace tests of the BSDF on the GPU, the energy tables against the tool, physical units against analytic values, the automatic exposure, the clusters, TAA, bindless against bound textures, the GPU time of a 1920 x 1080 frame and its passes (held to 16.6 ms with `HELIX_GPU_BUDGET=1`), golden images in `Tests/Golden/`; `Tests/Api/Helix.RenderPipelines.Physical.csv` is the inventory of the public C# surface |
 
 ## Use
 
