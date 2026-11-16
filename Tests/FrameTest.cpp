@@ -328,7 +328,10 @@ HX_TEST(Physical, TemporalAntialiasing)
             HX_REQUIRE(target.Render());
         HX_CHECK(PhysicalRenderPipeline::LastFrame().temporalAntialiasing);
         Array<u32> converged = target.pixels;
-        HX_CHECK(target.Matches("PhysicalSceneTaa", label));
+        // The average of the jittered frames is sensitive where samples fall on an edge (the box's top lies on a pixel
+        // row) and on the sharp highlights: WARP rasterizes those samples a little differently and its average differs
+        // by up to 32 there; the checks below keep their own tight limits.
+        HX_CHECK(target.Matches("PhysicalSceneTaa", label, 40));
         for (u32 i = 0; i < TemporalAA::kSampleCount; i++)
             HX_REQUIRE(target.Render());
         u32 stable = MaxDifference(converged, target.pixels);
