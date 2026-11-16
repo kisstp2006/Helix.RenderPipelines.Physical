@@ -1,0 +1,104 @@
+type,member,signature
+Rendering.Physical.AdaptationMode,Fixed,Rendering.Physical.AdaptationMode.Fixed = 0
+Rendering.Physical.AdaptationMode,Progressive,Rendering.Physical.AdaptationMode.Progressive = 1
+Rendering.Physical.AdaptationModeParameter,.ctor,"AdaptationModeParameter(AdaptationMode, bool = False)"
+Rendering.Physical.AntialiasingMode,None,Rendering.Physical.AntialiasingMode.None = 0
+Rendering.Physical.AntialiasingMode,TemporalAntialiasing,Rendering.Physical.AntialiasingMode.TemporalAntialiasing = 1
+Rendering.Physical.Exposure,.ctor,Exposure()
+Rendering.Physical.Exposure,adaptationMode,AdaptationModeParameter adaptationMode { get; }
+Rendering.Physical.Exposure,adaptationSpeedDarkToLight,MinFloatParameter adaptationSpeedDarkToLight { get; }
+Rendering.Physical.Exposure,adaptationSpeedLightToDark,MinFloatParameter adaptationSpeedLightToDark { get; }
+Rendering.Physical.Exposure,compensation,FloatParameter compensation { get; }
+Rendering.Physical.Exposure,fixedExposure,FloatParameter fixedExposure { get; }
+Rendering.Physical.Exposure,histogramHighPercentage,ClampedFloatParameter histogramHighPercentage { get; }
+Rendering.Physical.Exposure,histogramLowPercentage,ClampedFloatParameter histogramLowPercentage { get; }
+Rendering.Physical.Exposure,limitMax,FloatParameter limitMax { get; }
+Rendering.Physical.Exposure,limitMin,FloatParameter limitMin { get; }
+Rendering.Physical.Exposure,mode,ExposureModeParameter mode { get; }
+Rendering.Physical.ExposureMode,Automatic,Rendering.Physical.ExposureMode.Automatic = 1
+Rendering.Physical.ExposureMode,Fixed,Rendering.Physical.ExposureMode.Fixed = 0
+Rendering.Physical.ExposureMode,UsePhysicalCamera,Rendering.Physical.ExposureMode.UsePhysicalCamera = 2
+Rendering.Physical.ExposureModeParameter,.ctor,"ExposureModeParameter(ExposureMode, bool = False)"
+Rendering.Physical.LightUnit,Candela,Rendering.Physical.LightUnit.Candela = 1
+Rendering.Physical.LightUnit,Ev100,Rendering.Physical.LightUnit.Ev100 = 4
+Rendering.Physical.LightUnit,Lumen,Rendering.Physical.LightUnit.Lumen = 0
+Rendering.Physical.LightUnit,Lux,Rendering.Physical.LightUnit.Lux = 2
+Rendering.Physical.LightUnit,Nits,Rendering.Physical.LightUnit.Nits = 3
+Rendering.Physical.LightUnitUtils,AverageLuminanceToEV100,static float AverageLuminanceToEV100(float)
+Rendering.Physical.LightUnitUtils,CandelaToLumen,"static float CandelaToLumen(float, float)"
+Rendering.Physical.LightUnitUtils,CandelaToLux,"static float CandelaToLux(float, float)"
+Rendering.Physical.LightUnitUtils,CandelaToNits,"static float CandelaToNits(float, float)"
+Rendering.Physical.LightUnitUtils,ColorTemperatureToLinear,static Color ColorTemperatureToLinear(float)
+Rendering.Physical.LightUnitUtils,ComputeEV100,"static float ComputeEV100(float, float, float)"
+Rendering.Physical.LightUnitUtils,ConvertIntensity,"static float ConvertIntensity(LightType, LightUnit, LightUnit, float, float)"
+Rendering.Physical.LightUnitUtils,DefaultUnit,static LightUnit DefaultUnit(LightType)
+Rendering.Physical.LightUnitUtils,EV100ToExposure,static float EV100ToExposure(float)
+Rendering.Physical.LightUnitUtils,Ev100ToNits,static float Ev100ToNits(float)
+Rendering.Physical.LightUnitUtils,ExposureToEV100,static float ExposureToEV100(float)
+Rendering.Physical.LightUnitUtils,LumenToCandela,"static float LumenToCandela(float, float)"
+Rendering.Physical.LightUnitUtils,LuxToCandela,"static float LuxToCandela(float, float)"
+Rendering.Physical.LightUnitUtils,NitsToCandela,"static float NitsToCandela(float, float)"
+Rendering.Physical.LightUnitUtils,NitsToEv100,static float NitsToEv100(float)
+Rendering.Physical.LightUnitUtils,SolidAngle,static float SolidAngle(LightType)
+Rendering.Physical.LightUnitUtils,ToShaderIntensity,"static float ToShaderIntensity(LightType, LightUnit, float, float)"
+Rendering.Physical.PhysicalAdditionalCameraData,.ctor,PhysicalAdditionalCameraData()
+Rendering.Physical.PhysicalAdditionalCameraData,OnAfterDeserialize,void OnAfterDeserialize()
+Rendering.Physical.PhysicalAdditionalCameraData,OnBeforeSerialize,void OnBeforeSerialize()
+Rendering.Physical.PhysicalAdditionalCameraData,ResetHistory,void ResetHistory()
+Rendering.Physical.PhysicalAdditionalCameraData,antialiasing,AntialiasingMode antialiasing { get; set; }
+Rendering.Physical.PhysicalAdditionalCameraData,renderShadows,bool renderShadows { get; set; }
+Rendering.Physical.PhysicalAdditionalCameraData,taaHistoryWeight,float taaHistoryWeight { get; set; }
+Rendering.Physical.PhysicalAdditionalCameraData,volumeLayerMask,LayerMask volumeLayerMask { get; set; }
+Rendering.Physical.PhysicalAdditionalCameraData,volumeTrigger,Transform volumeTrigger { get; set; }
+Rendering.Physical.PhysicalAdditionalLightData,.ctor,PhysicalAdditionalLightData()
+Rendering.Physical.PhysicalAdditionalLightData,OnAfterDeserialize,void OnAfterDeserialize()
+Rendering.Physical.PhysicalAdditionalLightData,OnBeforeSerialize,void OnBeforeSerialize()
+Rendering.Physical.PhysicalAdditionalLightData,SetLightUnitAndConvert,void SetLightUnitAndConvert(LightUnit)
+Rendering.Physical.PhysicalAdditionalLightData,affectDiffuse,bool affectDiffuse { get; set; }
+Rendering.Physical.PhysicalAdditionalLightData,affectSpecular,bool affectSpecular { get; set; }
+Rendering.Physical.PhysicalAdditionalLightData,angularDiameter,float angularDiameter { get; set; }
+Rendering.Physical.PhysicalAdditionalLightData,intensity,float intensity { get; set; }
+Rendering.Physical.PhysicalAdditionalLightData,lightUnit,LightUnit lightUnit { get; set; }
+Rendering.Physical.PhysicalAdditionalLightData,shapeRadius,float shapeRadius { get; set; }
+Rendering.Physical.PhysicalCameraExtensions,GetPhysicalAdditionalCameraData,static PhysicalAdditionalCameraData GetPhysicalAdditionalCameraData(Camera)
+Rendering.Physical.PhysicalLightExtensions,GetPhysicalAdditionalLightData,static PhysicalAdditionalLightData GetPhysicalAdditionalLightData(Light)
+Rendering.Physical.PhysicalRenderPipeline,ToString,string ToString()
+Rendering.Physical.PhysicalRenderPipeline,asset,static PhysicalRenderPipelineAsset asset { get; }
+Rendering.Physical.PhysicalRenderPipeline,k_ShaderTagName,const string k_ShaderTagName
+Rendering.Physical.PhysicalRenderPipeline,supportsDevice,static bool supportsDevice { get; }
+Rendering.Physical.PhysicalRenderPipelineAsset,.ctor,PhysicalRenderPipelineAsset()
+Rendering.Physical.PhysicalRenderPipelineAsset,Create,static PhysicalRenderPipelineAsset Create()
+Rendering.Physical.PhysicalRenderPipelineAsset,OnAfterDeserialize,void OnAfterDeserialize()
+Rendering.Physical.PhysicalRenderPipelineAsset,OnBeforeSerialize,void OnBeforeSerialize()
+Rendering.Physical.PhysicalRenderPipelineAsset,bindlessMaterials,bool bindlessMaterials { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,cascadeBorder,float cascadeBorder { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,cascadeSplits,Vector3 cascadeSplits { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,clusterDepthSlices,int clusterDepthSlices { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,clusterTileSize,int clusterTileSize { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,defaultMaterial,Material defaultMaterial { get; }
+Rendering.Physical.PhysicalRenderPipelineAsset,defaultShader,Shader defaultShader { get; }
+Rendering.Physical.PhysicalRenderPipelineAsset,environmentLuminance,float environmentLuminance { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,maxLightsPerCluster,int maxLightsPerCluster { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,maxVisibleLights,int maxVisibleLights { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,packagePath,static string packagePath { get; }
+Rendering.Physical.PhysicalRenderPipelineAsset,pipelineType,Type pipelineType { get; }
+Rendering.Physical.PhysicalRenderPipelineAsset,renderPipelineShaderTag,string renderPipelineShaderTag { get; }
+Rendering.Physical.PhysicalRenderPipelineAsset,shadowCascadeCount,int shadowCascadeCount { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,shadowDepthBias,float shadowDepthBias { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,shadowDistance,float shadowDistance { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,shadowNormalBias,float shadowNormalBias { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,shadowmapResolution,int shadowmapResolution { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,softShadows,bool softShadows { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,supportsShadows,bool supportsShadows { get; set; }
+Rendering.Physical.PhysicalRenderPipelineAsset,volumeProfile,VolumeProfile volumeProfile { get; set; }
+Rendering.Physical.ShadowResolution,_1024,Rendering.Physical.ShadowResolution._1024 = 1024
+Rendering.Physical.ShadowResolution,_2048,Rendering.Physical.ShadowResolution._2048 = 2048
+Rendering.Physical.ShadowResolution,_4096,Rendering.Physical.ShadowResolution._4096 = 4096
+Rendering.Physical.ShadowResolution,_512,Rendering.Physical.ShadowResolution._512 = 512
+Rendering.Physical.Tonemapping,.ctor,Tonemapping()
+Rendering.Physical.Tonemapping,IsActive,bool IsActive()
+Rendering.Physical.Tonemapping,mode,TonemappingModeParameter mode { get; }
+Rendering.Physical.TonemappingMode,ACES,Rendering.Physical.TonemappingMode.ACES = 2
+Rendering.Physical.TonemappingMode,Neutral,Rendering.Physical.TonemappingMode.Neutral = 1
+Rendering.Physical.TonemappingMode,None,Rendering.Physical.TonemappingMode.None = 0
+Rendering.Physical.TonemappingModeParameter,.ctor,"TonemappingModeParameter(TonemappingMode, bool = False)"
