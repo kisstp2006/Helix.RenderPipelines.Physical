@@ -136,8 +136,7 @@ HX_TEST(Physical, TheSceneInBothLanguages)
         GameObject* host = GameObject::Create("SceneHost");
         host->AddComponent(scripting::TypeOf<CppPhysicalScene>());
         RunScriptPhase(ScriptMessage::Update);
-        // A first frame (its cascades fit the casters' bounds of the frame before), then the frame compared.
-        HX_REQUIRE(target.Render());
+        // The first frame of the scene is the one compared.
         HX_REQUIRE(target.Render());
         const PhysicalFrameInfo& info = PhysicalRenderPipeline::LastFrame();
         HX_CHECK(info.punctualLights == 9 && info.directionalLights == 1 && info.clustersX == 4 && info.clustersY == 4 && info.clustersZ == 16 && info.shadows &&
@@ -162,7 +161,6 @@ HX_TEST(Physical, TheSceneInBothLanguages)
         csHost->AddComponent(CSharp("CsPhysicalScene").type);
         RunScriptPhase(ScriptMessage::Update);
         HX_CHECK(SameNotes({"scene:True"}));
-        HX_REQUIRE(target.Render());
         HX_REQUIRE(target.Render());
         u32 diff = MaxDifference(cpp, target.pixels);
         if (diff > 0)
