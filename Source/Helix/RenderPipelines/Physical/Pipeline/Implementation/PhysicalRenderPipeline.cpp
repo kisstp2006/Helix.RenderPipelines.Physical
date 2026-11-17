@@ -186,6 +186,7 @@ namespace helix::rendering::physical
     void PhysicalRenderPipeline::Dispose(bool disposing)
     {
         (void)disposing;
+        Shader::SetGlobalFloat("_HelixLinearOutput", 0.0f);
         cameras_.Clear();
         lights_.Release();
         graph_.Cleanup();
@@ -252,6 +253,8 @@ namespace helix::rendering::physical
 
     void PhysicalRenderPipeline::Render(ScriptableRenderContext& context, Span<Camera* const> cameras)
     {
+        // Its targets hold linear colors: what draws display colors into them (world space UI) makes them linear.
+        Shader::SetGlobalFloat("_HelixLinearOutput", 1.0f);
         BeginContextRendering(context, cameras);
         String reason;
         if (!SupportsDevice(&reason))

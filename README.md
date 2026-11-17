@@ -36,6 +36,8 @@ and logs why.
 - Tonemapping (Neutral, ACES) through the `Tonemapping` volume component.
 - Bindless materials: the OpenPBR maps read through the device's bindless textures where it has them (OpenGL with
   ARB_bindless_texture), bound textures elsewhere, with the same image.
+- Display colors drawn into the scene (world space UI panels) made linear by the global `_HelixLinearOutput` the
+  pipeline sets: a panel's white is the frame's pre-exposed 1, tone mapped with the scene.
 
 ## Contents
 
