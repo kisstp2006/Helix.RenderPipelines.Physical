@@ -8,6 +8,8 @@
 #include <Helix/RenderPipelines/Physical/Energy/EnergyIntegration.h>
 #include <Helix/RenderPipelines/Physical/Energy/EnergyTables.inl>
 #include <Helix/RenderPipelines/Physical/Lighting/LightUnits.h>
+#include <Helix/RenderPipelines/Physical/Overrides/Overrides.h>
+#include <Helix/RenderPipelines/Physical/Pipeline/PhysicalRenderPipeline.h>
 #include <Helix/Testing/Test.h>
 
 #include <cmath>
@@ -89,6 +91,28 @@ HX_TEST(Physical, LightUnitsAndExposureAgainstAnalyticValues)
     DestroyImmediate(host);
     const char* expected = "units:Candela:50.000:Lumen:628.319:6.878:1.000:0.833:79.577";
     HX_CHECK(SameNotes({expected, expected}));
+}
+
+HX_TEST(Physical, AnAssetWithoutAProfileTakesTheDefaultOne)
+{
+    // An asset made by its class (the editor's -pipeline) has no profile: the pipeline's default one, the exposure
+    // following the frame, stands for the reference's default settings profile.
+    HX_REQUIRE(StartScripts());
+    auto* asset = static_cast<PhysicalRenderPipelineAsset*>(ScriptableObject::CreateInstance(scripting::TypeOf<PhysicalRenderPipelineAsset>()));
+    HX_REQUIRE(asset && !asset->volumeProfile());
+    VolumeManager& volumes = VolumeManager::instance();
+    if (volumes.isInitialized())
+        volumes.Deinitialize();
+    engine::RenderPipeline* pipeline = asset->CreatePipeline();
+    HX_REQUIRE(pipeline && volumes.isInitialized());
+    VolumeProfile* profile = volumes.globalDefaultProfile();
+    HX_REQUIRE(profile);
+    Exposure* exposure = profile->TryGet<Exposure>();
+    HX_CHECK(exposure && exposure->mode.overrideState() && exposure->mode.value() == ExposureMode::Automatic);
+    delete pipeline;
+    if (volumes.isInitialized())
+        volumes.Deinitialize();
+    Object::DestroyImmediate(asset);
 }
 
 HX_TEST(Physical, TheEnergyTablesAreTheToolsIntegrals)

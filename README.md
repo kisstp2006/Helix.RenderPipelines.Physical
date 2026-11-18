@@ -30,7 +30,8 @@ and logs why.
 - The environment: the skybox's cube or the background color, the ambient probe and the reflections at a luminance the
   asset sets.
 - Automatic exposure: a luminance histogram of the frame in compute, its average between two percentages, clamped,
-  compensated and reached over time; or a fixed EV100, or the physical camera's (the `Exposure` volume component).
+  compensated and reached over time; or a fixed EV100, or the physical camera's (the `Exposure` volume component). An
+  asset without a volume profile renders with the pipeline's default one, whose exposure is automatic.
 - Temporal antialiasing: a Halton jitter of the projection, the history reprojected by the camera's motion and clamped
   to the frame's neighbourhood, started anew on a cut.
 - Tonemapping (Neutral, ACES) through the `Tonemapping` volume component.

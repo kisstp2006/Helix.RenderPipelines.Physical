@@ -15,6 +15,7 @@
 #include <Helix/RenderPipelines/Physical/Energy/EnergyTables.inl>
 #include <Helix/RenderPipelines/Physical/Energy/EnergyIntegration.h>
 #include <Helix/RenderPipelines/Physical/Lighting/LightUnits.h>
+#include <Helix/RenderPipelines/Physical/Overrides/Overrides.h>
 #include <Helix/Scripting/Bindings/Interop.h>
 
 #include <cmath>
@@ -167,12 +168,34 @@ namespace helix::rendering::physical
         return true;
     }
 
+    namespace
+    {
+        // The defaults of an asset without a profile (the reference's default settings profile): the exposure
+        // follows the frame (the components' own default is a fixed EV100 of 15, black for lights of a few lux).
+        VolumeProfile* DefaultProfile()
+        {
+            static PPtr<VolumeProfile> profile;
+            if (!profile.Get())
+            {
+                auto* p = static_cast<VolumeProfile*>(ScriptableObject::CreateInstance(scripting::TypeOf<VolumeProfile>()));
+                if (!p)
+                    return nullptr;
+                p->SetName("Physical Default Profile");
+                p->hideFlags = HideFlags::HideAndDontSave;
+                if (Exposure* exposure = p->Add<Exposure>())
+                    exposure->mode.Override(ExposureMode::Automatic);
+                profile = PPtr<VolumeProfile>(p);
+            }
+            return profile.Get();
+        }
+    }
+
     PhysicalRenderPipeline::PhysicalRenderPipeline(PhysicalRenderPipelineAsset* asset) : asset_(asset), graph_("Physical")
     {
         Blitter::Initialize(Shader::Find("Hidden/Core/Blit"), Shader::Find("Hidden/Core/BlitColorAndDepth"));
         VolumeManager& volumes = VolumeManager::instance();
         if (!volumes.isInitialized())
-            volumes.Initialize(asset ? asset->volumeProfile() : nullptr, nullptr);
+            volumes.Initialize(asset && asset->volumeProfile() ? asset->volumeProfile() : DefaultProfile(), nullptr);
         GraphicsSettings::SetUseScriptableRenderPipelineBatching(true);
         gActive = this;
     }

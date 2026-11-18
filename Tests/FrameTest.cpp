@@ -274,7 +274,9 @@ HX_TEST(Physical, ClustersFindEveryLight)
         auto* volume = static_cast<Volume*>(holder->AddComponent(scripting::TypeOf<Volume>()));
         volume->SetIsGlobal(true);
         volume->SetSharedProfile(s.profile);
-        s.profile->Add<Exposure>()->fixedExposure.Override(6.0f);
+        Exposure* exposure = s.profile->Add<Exposure>();
+        exposure->mode.Override(ExposureMode::Fixed);
+        exposure->fixedExposure.Override(6.0f);
         s.profile->Add<Tonemapping>()->mode.Override(TonemappingMode::Neutral);
         s.asset = PhysicalRenderPipelineAsset::Create();
         s.assets.Push(s.asset);
